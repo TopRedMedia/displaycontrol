@@ -7,4 +7,4 @@ class GenericConnection:
         pass
 
     def runcommand(self, command):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()

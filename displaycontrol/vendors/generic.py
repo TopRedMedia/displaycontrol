@@ -1,5 +1,5 @@
 from displaycontrol.connections import GenericConnection
-from displaycontrol.exceptions import NotImplementedError
+from displaycontrol.exceptions import CommandNotImplementedError
 from displaycontrol.tools import Tools
 
 
@@ -11,7 +11,7 @@ class GenericDetector:
     _displays = []
 
     def detect_displays(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
 
 class DisplayGeneric:
@@ -107,16 +107,16 @@ class DisplayGeneric:
             return False
 
     def get_answer_data(self, data):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def is_ready_for_commands(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_power_state(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def set_power_state(self, state):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_power_state_hr(self):
         return self.dict_power_states[self.get_power_state()]
@@ -125,70 +125,70 @@ class DisplayGeneric:
         return self.input_channel_get[self.get_input_channel()]
 
     def get_input_channel(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def set_input_channel(self, channel):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_auto_detect_input_channel(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def set_auto_detect_input_channel(self, setting):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_failover_input_setting(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def set_failover_input_setting(self, setting):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_lock_keys(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_lock_keys_hr(self):
         return self.dict_lock_states[self.get_lock_keys()]
 
     def get_lock_ir_remote(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_lock_ir_remote_hr(self):
         return self.dict_lock_states[self.get_lock_ir_remote()]
 
     def set_lock_keys(self, state):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def set_lock_ir_remote(self, state):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_control_software_version(self):
         """ Returns the software version of the serial / ethernet control software.
         """
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_platform_version(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_platform_label(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_firmware_version(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_firmware_build_date(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_serialnumber(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_modell_number(self):
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_temperature(self):
         """ Get's the temperature from sensors in the display. Returns a list of
         values, even if there is only one sensore builtin.
         """
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
 
     def get_operating_hours(self):
         """ Gets a value in hours how many operating hours the display has. """
-        raise NotImplementedError()
+        raise CommandNotImplementedError()
