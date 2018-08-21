@@ -4,7 +4,7 @@ python package to control projectors and displays via serial or ethernet connect
 
 ## short track
 
-The package could be used to control displays and projectors by all supported vendors either via serial connection or ethernet. Currently, it is under heavy development which means that more vendors will be added shortly. 
+The package could be used to control displays and projectors by all supported vendors either via serial connection or ethernet.  
 
 ### Connections
 
@@ -15,11 +15,8 @@ As of now, the package only allows communication via serial interface but since 
 Currently supported:
 
 * BenQ (especially the LU9235 projector)
-
-Planned to be integrated shortly:
-
-* Philips professional displays
-* Samsung signage displays
+* Philips professional displays (respecting the weird change in the SICP platform history)
+* Samsung signage displays (only basic stuff)
 
 ## Installation
 
@@ -81,8 +78,7 @@ projectors_serial = control.get_serialnumber()
 
 ## Roadmap
 
-* Version 0.0.4 - Finalize BenQ vendor for at least the BenQ LU9235 projector.
-* Version 0.0.5 - Migrate existing Philips and Samsung displays vendor classes into this project.
+* Version 0.0.5 - Finalize BenQ, Philips and Samsung packages.
 * Version 0.1.0 - Migrate existing Ethernet connection into this project. 
 
 
