@@ -14,21 +14,31 @@ class BenqGeneric(DisplayGeneric):
         DisplayGeneric.__init__(self, newconnection, id)
         self.set_connection(newconnection)
 
-    def command(self, command, data):
-        temp = list()
+    def command(self, command):
+        cmd = ''
 
         # Add a *
-        temp.append('*')
+        cmd += '*'
 
         # Add the command
-        temp.append(command)
+        cmd += command
 
         # Add a #
-        temp.append('#')
+        cmd += '#'
 
-        # Convert the mapping to bytes
-        cmd = Tools.list_to_string(temp)
+        mapping = list()
+        mapping.append(0x13)
+        mapping.append(0x2a)
+        mapping.append(0x70)
+        mapping.append(0x6f)
+        mapping.append(0x77)
+        mapping.append(0x3d)
+        mapping.append(0x3f)
+        mapping.append(0x23)
+        mapping.append(0x13)
 
+        cmd = Tools.list_to_bytes(mapping)
+        print cmd
         # run the command
         return self.connection.runcommand(cmd)
 
@@ -54,7 +64,10 @@ class BenqGeneric(DisplayGeneric):
         raise NotImplementedError()
 
     def set_power_state(self, state):
-        pass
+        if state == self.POWER_STATE_ON:
+            self.command('pow=on')
+        else:
+            self.command('pow=off')
 
     def get_input_channel(self):
         pass
@@ -114,7 +127,8 @@ class BenqGeneric(DisplayGeneric):
         pass
 
     def is_ready_for_commands(self):
-        data = self.command(0x19, list())
+        data = self.command('pow=?')
+        print data
         return self.is_answer_ack(data)
 
 
