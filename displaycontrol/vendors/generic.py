@@ -93,12 +93,15 @@ class DisplayGeneric:
     def set_connection(self, new_connection):
         self.connection = new_connection
 
+    def command(self, data):
+        raise CommandNotImplementedError()
+
+    def command_with_response(self, data):
+        raise CommandNotImplementedError()
+
     @staticmethod
     def is_answer_ack(data):
-        if len(data) > 2:
-            return True
-        else:
-            return False
+        raise CommandNotImplementedError()
 
     def get_answer_data(self, data):
         raise CommandNotImplementedError()

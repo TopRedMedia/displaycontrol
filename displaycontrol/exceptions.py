@@ -12,3 +12,7 @@ class CommandNotImplementedError(Exception):
 
 class HandshakeNotSuccessfullError(Exception):
     pass
+
+
+class CommandResponseMalformedError(Exception):
+    pass

@@ -24,11 +24,18 @@ class BenqGeneric(DisplayGeneric):
         # run the command
         return self.connection.runcommand(cmd)
 
-    def get_answer_data(self, data):
-        return data
+    def command_with_response(self, data):
+        response = self.command(data)
+
+        print "---data---"
+        print data
+        print "---response---"
+        print response
+
+        return response
 
     def get_power_state(self):
-        return self.command('pow=?')
+        return self.command_with_response('pow=?')
 
     def set_power_state(self, state):
         if state == self.POWER_STATE_ON:
