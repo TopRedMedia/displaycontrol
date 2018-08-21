@@ -9,8 +9,8 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='Displaycontrol',
-    version='0.0.2',
+    name='displaycontrol',
+    version='0.0.3.dev1',
     packages=['displaycontrol'],
     license='Creative Commons Attribution-Noncommercial-Share Alike license',
     description='Package to control displays and projectors via serial and ethernet connection.',
