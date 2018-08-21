@@ -4,7 +4,7 @@ from displaycontrol.vendors import DisplayGeneric
 from displaycontrol.exceptions import CommandArgumentsNotSupportedError
 
 
-class BenqGeneric(DisplayGeneric):
+class BenQGeneric(DisplayGeneric):
     """
     Generic Benq Display class.
     """
@@ -132,7 +132,7 @@ class BenqGeneric(DisplayGeneric):
             raise CommandArgumentsNotSupportedError()
 
 
-class BenqLU9235(BenqGeneric):
+class BenQLU9235(BenQGeneric):
     input_channel_get = {
         'RGB': 'COMPUTER/YPbPr',
         'RGB2': 'COMPUTER 2/YPbPr2',
