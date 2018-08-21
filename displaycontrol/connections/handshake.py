@@ -1,3 +1,4 @@
+from displaycontrol.exceptions import HandshakeNotSuccessfullError
 
 class GenericHandshake:
     """
@@ -33,24 +34,15 @@ class SendAndReceiveHandshake(GenericHandshake):
     send_bytes = []
     receive_bytes = []
 
-    def __init__(self, seconds=1, send_bytes=[], receive_bytes=[]):
+    def __init__(self, seconds=1, send_bytes=None, receive_bytes=None):
         GenericHandshake.__init__(self)
         self.seconds = seconds
         self.send_bytes = send_bytes
         self.receive_bytes = receive_bytes
 
     def perform_handshake(self, connection):
-        from time import sleep
-
         # send the given bytes
-        connection.runcommand(self.send_bytes, with_handshake=False)
+        received = connection.runcommand(self.send_bytes, with_handshake=False)
 
-        # wait
-        sleep(self.seconds)
-
-        # receive bytes
-        received = connection.runcommand(self.receive_bytes, with_handshake=False)
-        print received
-
-        # compare and raise exception if not the same
-        pass
+        if not received == self.receive_bytes:
+            raise HandshakeNotSuccessfullError

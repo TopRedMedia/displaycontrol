@@ -43,8 +43,4 @@ class SerialConnection(GenericConnection):
             ser.close()
 
         # unfuddle the output
-        print out
-        data = ''.join(["%02X " % ord(x) for x in out]).strip()
-        data = data.split(' ')
-
-        return data
+        return out

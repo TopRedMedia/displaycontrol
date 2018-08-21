@@ -1,9 +1,5 @@
-from abc import ABCMeta
-
 from displaycontrol.connections.handshake import SendAndReceiveHandshake
 from displaycontrol.vendors import DisplayGeneric
-from displaycontrol.connections import GenericConnection
-from displaycontrol.exceptions import CommandNotImplementedError
 from displaycontrol.tools import Tools
 
 
@@ -14,26 +10,20 @@ class BenqGeneric(DisplayGeneric):
     def __init__(self, newconnection, id=1):
         DisplayGeneric.__init__(self, newconnection, id)
         handshake = SendAndReceiveHandshake(seconds=1,
-                                            send_bytes=[0x13],
-                                            receive_bytes=[0x62])
+                                            send_bytes='\r',
+                                            receive_bytes='>')
+        newconnection.handshake = handshake
         self.set_connection(newconnection)
 
     def command(self, command):
-        cmd = ''
-
-        # Add a *
-        cmd += '*'
-
-        # Add the command
-        cmd += command
-
-        # Add a # and a \r
-        cmd += '#\r'
+        # Add some chars.
+        cmd = '*' + command + '#\r'
 
         # run the command
         return self.connection.runcommand(cmd)
 
     def get_answer_data(self, data):
+        return Tools.ascii_hex_list_to_string(data)
         """ Gets the part of the data that is used as data payload """
         if self.is_answer_ack(data):
             # The data part starts at the third byte and has a checksum
@@ -52,7 +42,7 @@ class BenqGeneric(DisplayGeneric):
             return list()
 
     def get_power_state(self):
-        raise NotImplementedError()
+        return self.command('pow=?')
 
     def set_power_state(self, state):
         if state == self.POWER_STATE_ON:
