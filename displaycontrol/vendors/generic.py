@@ -25,7 +25,7 @@ class DisplayGeneric:
     GENERIC_DISABLED = 2
     GENERIC_UNKNOWN = 0
 
-    LOCKED_UNKOWN = -1
+    LOCKED_UNKNOWN = -1
     LOCKED_NONE = 0
     LOCKED_ALL = 1
     LOCKED_ALL_BUT_POWER = 2
@@ -35,7 +35,7 @@ class DisplayGeneric:
     LOCKED_ALL_EXCEPT_PWRVOL = 6
 
     dict_lock_states = {
-        LOCKED_UNKOWN: "unknown",
+        LOCKED_UNKNOWN: "unknown",
         LOCKED_NONE: "No Lock",
         LOCKED_ALL: "All",
         LOCKED_ALL_BUT_POWER: "All but Power",
@@ -94,7 +94,7 @@ class DisplayGeneric:
     def set_connection(self, new_connection):
         self.connection = new_connection
 
-    def command(self, data):
+    def command(self, command, data):
         raise CommandNotImplementedError()
 
     def command_with_response(self, data):
