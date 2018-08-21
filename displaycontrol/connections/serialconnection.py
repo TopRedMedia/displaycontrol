@@ -1,4 +1,5 @@
-import serial, time
+import serial
+import time
 from displaycontrol.connections import GenericConnection
 
 
@@ -8,6 +9,7 @@ class SerialConnection(GenericConnection):
     sleep = 1
     baudrate = 9600
     handshake = None
+    parser = None
     stopbits = 1
     parity = 'N'
     bytesize = 8
@@ -42,5 +44,7 @@ class SerialConnection(GenericConnection):
         else:
             ser.close()
 
-        # unfuddle the output
-        return out
+        if self.parser is not None:
+            return self.parser.parse(out)
+        else:
+            return out
