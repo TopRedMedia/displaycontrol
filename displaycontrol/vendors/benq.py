@@ -27,24 +27,48 @@ class BenqGeneric(DisplayGeneric):
     def command_with_response(self, data):
         response = self.command(data)
 
-        print "---data---"
-        print data
-        print "---response---"
-        print response
+        # remove new lines
+        response = ''.join(response.splitlines())
+
+        # remove the first string if it is identical to the command
+        command_length = len(data) + 2
+        first_part = response[:command_length]
+        if '*'+data+'#' == first_part:
+            response = response[command_length:]
+
+        # remove the * and # parts of the response if set
+        if response[:1] == '*':
+            response = response[1:]
+        if response[-1:] == '#':
+            response = response[:-1]
+
+        # try to split the response on a =
+        split = response.split('=')
+        if len(split) == 2:
+            return split[1]
 
         return response
 
     def get_power_state(self):
-        return self.command_with_response('pow=?')
+        pow = self.command_with_response('pow=?')
+        if pow == 'ON':
+            return self.POWER_STATE_ON
+        if pow == 'OFF':
+            return self.POWER_STATE_OFF
+        return self.POWER_STATE_UNKNOWN
 
     def set_power_state(self, state):
         if state == self.POWER_STATE_ON:
             self.command('pow=on')
-        else:
+            self.command('blank=off')
+        elif state == self.POWER_STATE_POWERSAVE:
+            if self.get_power_state() == self.POWER_STATE_ON:
+                self.command('blank=on')
+        elif state == self.POWER_STATE_OFF:
             self.command('pow=off')
 
     def get_input_channel(self):
-        pass
+        return self.command_with_response('sour=?')
 
     def set_input_channel(self, channel):
         pass
@@ -80,7 +104,7 @@ class BenqGeneric(DisplayGeneric):
         pass
 
     def get_platform_label(self):
-        pass
+        return self.command_with_response('modelname=?')
 
     def get_firmware_version(self):
         pass
@@ -101,9 +125,7 @@ class BenqGeneric(DisplayGeneric):
         pass
 
     def is_ready_for_commands(self):
-        data = self.command('pow=?')
-        print data
-        return self.is_answer_ack(data)
+        pass
 
 
 class BenqLU9235(BenqGeneric):
