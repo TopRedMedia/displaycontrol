@@ -51,7 +51,7 @@ connection = SerialConnection()
 connection.port = '/dev/tty.usbserial' # yeah, we are on a mac
 connection.baudrate = 38400 
  
-# Create instance of the BenQ LU9235 controller class with default settings
+# Create instance of the BenQ LU9235 controller class with overriden custom settings
 control = BenQLU9235(connection)
 
 # Print the current input channel as human readable string
