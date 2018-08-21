@@ -2,3 +2,4 @@
 from generic import *
 from benq import *
 from philips import *
+from samsung import *
