@@ -23,6 +23,7 @@ class DisplayGeneric:
     """
     GENERIC_ENABLED = 1
     GENERIC_DISABLED = 2
+    GENERIC_UNKNOWN = 0
 
     LOCKED_UNKOWN = -1
     LOCKED_NONE = 0
@@ -98,6 +99,14 @@ class DisplayGeneric:
 
     def command_with_response(self, data):
         raise CommandNotImplementedError()
+
+    def generic_enabled_result(self, current):
+        if current == 'on':
+            return self.GENERIC_ENABLED
+        elif current == 'off':
+            return self.GENERIC_DISABLED
+        else:
+            return self.GENERIC_UNKNOWN
 
     @staticmethod
     def is_answer_ack(data):
@@ -189,3 +198,119 @@ class DisplayGeneric:
     def get_operating_hours(self):
         """ Gets a value in hours how many operating hours the display has. """
         raise CommandNotImplementedError()
+
+    def get_freeze_status(self):
+        raise CommandNotImplementedError()
+
+    def set_freeze_status(self, status):
+        raise CommandNotImplementedError()
+
+    def get_blank_status(self):
+        raise CommandNotImplementedError()
+
+    def set_blank_status(self, status):
+        raise CommandNotImplementedError()
+
+    def get_audio_mute_status(self):
+        raise CommandNotImplementedError()
+
+    def set_audio_mute_status(self, status):
+        raise CommandNotImplementedError()
+
+    def get_audio_volume(self):
+        raise CommandNotImplementedError()
+
+    def set_audio_volume_higher(self):
+        raise CommandNotImplementedError()
+
+    def set_audio_volume_lower(self):
+        raise CommandNotImplementedError()
+
+    def get_picture_mode(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_mode(self, mode):
+        raise CommandNotImplementedError()
+
+    def get_picture_contrast(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_contrast_higher(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_contrast_lower(self):
+        raise CommandNotImplementedError()
+
+    def get_picture_brightness(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_brightness_higher(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_brightness_lower(self):
+        raise CommandNotImplementedError()
+
+    def get_picture_color(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_color_higher(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_color_lower(self):
+        raise CommandNotImplementedError()
+
+    def get_picture_sharpness(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_sharpness_higher(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_sharpness_lower(self):
+        raise CommandNotImplementedError()
+
+    def get_picture_color_temperature(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_color_temperature(self, modus):
+        raise CommandNotImplementedError()
+
+    def get_picture_aspect_ratio(self):
+        raise CommandNotImplementedError()
+
+    def set_picture_aspect_ratio(self, modus):
+        raise CommandNotImplementedError()
+
+    def get_projector_position(self):
+        raise CommandNotImplementedError()
+
+    def set_projector_position(self, position):
+        raise CommandNotImplementedError()
+
+    def get_projector_quick_cooling(self):
+        raise CommandNotImplementedError()
+
+    def set_projector_quick_cooling(self, modus):
+        raise CommandNotImplementedError()
+
+    def get_projector_direct_power(self):
+        raise CommandNotImplementedError()
+
+    def set_projector_direct_power(self, modus):
+        raise CommandNotImplementedError()
+
+    def get_projector_autopower(self):
+        raise CommandNotImplementedError()
+
+    def set_projector_autopower(self, modus):
+        raise CommandNotImplementedError()
+
+    def get_projector_lamp_hour(self):
+        raise CommandNotImplementedError()
+
+    def get_projector_lamp_modus(self):
+        raise CommandNotImplementedError()
+
+    def set_projector_lamp_modus(self, modus):
+        raise CommandNotImplementedError()
+
+

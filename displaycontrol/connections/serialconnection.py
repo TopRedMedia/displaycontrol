@@ -4,7 +4,7 @@ from displaycontrol.connections import GenericConnection
 
 
 class SerialConnection(GenericConnection):
-    port = 0
+    port = 'COM1'
     timeout = 2
     sleep = 1
     baudrate = 9600
@@ -23,7 +23,7 @@ class SerialConnection(GenericConnection):
             if self.handshake is not None:
                 self.handshake.perform_handshake(self)
 
-        # Open first serial port with default settings
+        # Open serial port with default settings
         out = ''
         try:
             ser = serial.Serial(port=self.port,

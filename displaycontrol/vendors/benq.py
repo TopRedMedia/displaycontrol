@@ -1,15 +1,21 @@
 from displaycontrol.connections.handshake import SendAndReceiveHandshake
+from displaycontrol.connections import SerialConnection
 from displaycontrol.vendors import DisplayGeneric
-from displaycontrol.tools import Tools
+from displaycontrol.exceptions import CommandArgumentsNotSupportedError
 
 
 class BenqGeneric(DisplayGeneric):
-    """ Generic Benq Display class.
+    """
+    Generic Benq Display class.
     """
 
-    def __init__(self, newconnection, id=1):
-        DisplayGeneric.__init__(self, newconnection, id)
-        self.set_connection(newconnection)
+    def __init__(self, connection=None, id=1):
+        # If there is no connection specified, fall back to a default SerialConnection
+        if connection is None:
+            connection = SerialConnection()
+
+        DisplayGeneric.__init__(self, connection, id)
+        self.set_connection(connection)
 
     def set_connection(self, new_connection):
         new_connection.handshake = SendAndReceiveHandshake(seconds=1,
@@ -33,7 +39,7 @@ class BenqGeneric(DisplayGeneric):
         # remove the first string if it is identical to the command
         command_length = len(data) + 2
         first_part = response[:command_length]
-        if '*'+data+'#' == first_part:
+        if '*' + data + '#' == first_part:
             response = response[command_length:]
 
         # remove the * and # parts of the response if set
@@ -60,73 +66,79 @@ class BenqGeneric(DisplayGeneric):
     def set_power_state(self, state):
         if state == self.POWER_STATE_ON:
             self.command('pow=on')
-            self.command('blank=off')
-        elif state == self.POWER_STATE_POWERSAVE:
-            if self.get_power_state() == self.POWER_STATE_ON:
-                self.command('blank=on')
         elif state == self.POWER_STATE_OFF:
             self.command('pow=off')
+        else:
+            raise CommandArgumentsNotSupportedError()
 
     def get_input_channel(self):
         return self.command_with_response('sour=?')
 
+    def get_input_channel_hr(self):
+        source = self.command_with_response('sour=?')
+        if source in self.input_channel_get:
+            return self.input_channel_get[source]
+        return source
+
     def set_input_channel(self, channel):
-        pass
-
-    def get_auto_detect_input_channel(self):
-        pass
-
-    def set_auto_detect_input_channel(self, setting):
-        pass
-
-    def get_failover_input_setting(self):
-        pass
-
-    def set_failover_input_setting(self, setting):
-        pass
-
-    def get_lock_keys(self):
-        pass
-
-    def get_lock_ir_remote(self):
-        pass
-
-    def set_lock_keys(self, state):
-        pass
-
-    def set_lock_ir_remote(self, state):
-        pass
-
-    def get_control_software_version(self):
-        pass
+        if channel in self.input_channel_get:
+            self.command_with_response('sour=' + channel)
+        else:
+            raise CommandArgumentsNotSupportedError()
 
     def get_platform_version(self):
-        pass
+        return self.get_platform_label()
 
     def get_platform_label(self):
         return self.command_with_response('modelname=?')
 
     def get_firmware_version(self):
-        pass
+        return self.get_platform_label()
 
     def get_firmware_build_date(self):
-        pass
-
-    def get_serialnumber(self):
-        pass
+        return self.get_platform_label()
 
     def get_modell_number(self):
-        pass
-
-    def get_temperature(self):
-        pass
+        return self.get_platform_label()
 
     def get_operating_hours(self):
-        pass
+        return self.get_projector_lamp_hour()
 
-    def is_ready_for_commands(self):
-        pass
+    def get_projector_lamp_hour(self):
+        return self.command_with_response('ltim=?')
+
+    def get_freeze_status(self):
+        current = self.command_with_response('freeze=?')
+        return self.generic_enabled_result(current)
+
+    def set_freeze_status(self, status):
+        if status == self.GENERIC_ENABLED:
+            self.command('freeze=on')
+        elif status == self.GENERIC_DISABLED:
+            self.command('freeze=off')
+        else:
+            raise CommandArgumentsNotSupportedError()
+
+    def get_blank_status(self):
+        current = self.command_with_response('blank=?')
+        return self.generic_enabled_result(current)
+
+    def set_blank_status(self, status):
+        if status == self.GENERIC_ENABLED:
+            self.command('blank=on')
+        elif status == self.GENERIC_DISABLED:
+            self.command('blank=off')
+        else:
+            raise CommandArgumentsNotSupportedError()
 
 
 class BenqLU9235(BenqGeneric):
-    pass
+    input_channel_get = {
+        'RGB': 'COMPUTER/YPbPr',
+        'RGB2': 'COMPUTER 2/YPbPr2',
+        'dvid': 'DVI-D',
+        'hdmi': 'HDMI 1',
+        'hdmi2': 'HDMI 2 / MHL2',
+        'vid': 'Composite',
+        'hdbaset': 'HDbaseT',
+    }

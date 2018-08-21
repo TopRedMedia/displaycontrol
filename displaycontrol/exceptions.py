@@ -10,9 +10,13 @@ class CommandNotImplementedError(Exception):
     pass
 
 
-class HandshakeNotSuccessfullError(Exception):
+class CommandResponseMalformedError(Exception):
     pass
 
 
-class CommandResponseMalformedError(Exception):
+class CommandArgumentsNotSupportedError(Exception):
+    pass
+
+
+class HandshakeNotSuccessfullError(Exception):
     pass
