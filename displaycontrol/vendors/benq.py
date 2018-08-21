@@ -9,11 +9,13 @@ class BenqGeneric(DisplayGeneric):
 
     def __init__(self, newconnection, id=1):
         DisplayGeneric.__init__(self, newconnection, id)
-        handshake = SendAndReceiveHandshake(seconds=1,
-                                            send_bytes='\r',
-                                            receive_bytes='>')
-        newconnection.handshake = handshake
         self.set_connection(newconnection)
+
+    def set_connection(self, new_connection):
+        new_connection.handshake = SendAndReceiveHandshake(seconds=1,
+                                                           send_bytes='\r',
+                                                           receive_bytes='>')
+        self.connection = new_connection
 
     def command(self, command):
         # Add some chars.
@@ -23,23 +25,7 @@ class BenqGeneric(DisplayGeneric):
         return self.connection.runcommand(cmd)
 
     def get_answer_data(self, data):
-        return Tools.ascii_hex_list_to_string(data)
-        """ Gets the part of the data that is used as data payload """
-        if self.is_answer_ack(data):
-            # The data part starts at the third byte and has a checksum
-
-            # Remove the first two bytes
-            del data[0]  # First one
-            del data[0]  # Was second, is first after removal of first
-
-            # Remove the last byte because it is the checksum
-            del data[-1]
-
-            # Return the resulting list
-            return data
-
-        else:
-            return list()
+        return data
 
     def get_power_state(self):
         return self.command('pow=?')

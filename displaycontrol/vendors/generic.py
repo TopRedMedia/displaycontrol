@@ -85,13 +85,7 @@ class DisplayGeneric:
         self.set_display_id(id)
 
     def detect_displays(self):
-        ports = Tools.get_available_comports()
-        available = []
-        for port in ports:
-            for id in range(5):
-                if self.is_ready_for_commands():
-                    available.append({"port": port, "class": self.__name__, "id": id})
-        return available
+        raise CommandNotImplementedError()
 
     def set_display_id(self, id):
         self.display_id = int(id)
