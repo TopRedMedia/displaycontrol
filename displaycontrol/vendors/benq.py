@@ -1,8 +1,9 @@
 from abc import ABCMeta
 
+from displaycontrol.connections.handshake import SendAndReceiveHandshake
 from displaycontrol.vendors import DisplayGeneric
 from displaycontrol.connections import GenericConnection
-from displaycontrol.exceptions import NotImplementedError
+from displaycontrol.exceptions import CommandNotImplementedError
 from displaycontrol.tools import Tools
 
 
@@ -12,6 +13,9 @@ class BenqGeneric(DisplayGeneric):
 
     def __init__(self, newconnection, id=1):
         DisplayGeneric.__init__(self, newconnection, id)
+        handshake = SendAndReceiveHandshake(seconds=1,
+                                            send_bytes=[0x13],
+                                            receive_bytes=[0x62])
         self.set_connection(newconnection)
 
     def command(self, command):
@@ -23,22 +27,9 @@ class BenqGeneric(DisplayGeneric):
         # Add the command
         cmd += command
 
-        # Add a #
-        cmd += '#'
+        # Add a # and a \r
+        cmd += '#\r'
 
-        mapping = list()
-        mapping.append(0x13)
-        mapping.append(0x2a)
-        mapping.append(0x70)
-        mapping.append(0x6f)
-        mapping.append(0x77)
-        mapping.append(0x3d)
-        mapping.append(0x3f)
-        mapping.append(0x23)
-        mapping.append(0x13)
-
-        cmd = Tools.list_to_bytes(mapping)
-        print cmd
         # run the command
         return self.connection.runcommand(cmd)
 

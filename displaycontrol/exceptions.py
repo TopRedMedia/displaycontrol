@@ -6,5 +6,9 @@ class ConnectionUnknownError(Exception):
     pass
 
 
-class NotImplementedError(Exception):
+class CommandNotImplementedError(Exception):
+    pass
+
+
+class HandshakeNotSuccessfullError(Exception):
     pass

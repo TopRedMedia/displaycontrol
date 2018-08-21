@@ -4,3 +4,5 @@
 *.pyc
 .idea/
 local-dev.py
+serial
+pyjector
