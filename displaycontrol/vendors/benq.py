@@ -23,15 +23,18 @@ class BenQGeneric(DisplayGeneric):
                                                            receive_bytes='>')
         self.connection = new_connection
 
-    def command(self, command):
-        # Add some chars.
-        cmd = '*' + command + '#\r'
+    def command(self, command, data):
+        # Assemble the command
+        assembled_command = self.assemble_runnable_command(command, data)
 
-        # run the command
-        return self.connection.runcommand(cmd)
+        # Run the assembled command
+        return self.connection.runcommand(assembled_command)
+
+    def assemble_runnable_command(self, command, data):
+        return '*' + command + '#\r'
 
     def command_with_response(self, data):
-        response = self.command(data)
+        response = self.command(data, None)
 
         # remove new lines
         response = ''.join(response.splitlines())
@@ -65,9 +68,9 @@ class BenQGeneric(DisplayGeneric):
 
     def set_power_state(self, state):
         if state == self.POWER_STATE_ON:
-            self.command('pow=on')
+            self.command('pow=on', None)
         elif state == self.POWER_STATE_OFF:
-            self.command('pow=off')
+            self.command('pow=off', None)
         else:
             raise CommandArgumentsNotSupportedError()
 
@@ -113,9 +116,9 @@ class BenQGeneric(DisplayGeneric):
 
     def set_freeze_status(self, status):
         if status == self.GENERIC_ENABLED:
-            self.command('freeze=on')
+            self.command('freeze=on', None)
         elif status == self.GENERIC_DISABLED:
-            self.command('freeze=off')
+            self.command('freeze=off', None)
         else:
             raise CommandArgumentsNotSupportedError()
 
@@ -125,9 +128,9 @@ class BenQGeneric(DisplayGeneric):
 
     def set_blank_status(self, status):
         if status == self.GENERIC_ENABLED:
-            self.command('blank=on')
+            self.command('blank=on', None)
         elif status == self.GENERIC_DISABLED:
-            self.command('blank=off')
+            self.command('blank=off', None)
         else:
             raise CommandArgumentsNotSupportedError()
 

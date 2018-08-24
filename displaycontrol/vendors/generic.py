@@ -97,6 +97,9 @@ class DisplayGeneric:
     def command(self, command, data):
         raise CommandNotImplementedError()
 
+    def assemble_runnable_command(self, command, data):
+        raise CommandNotImplementedError()
+
     def command_with_response(self, data):
         raise CommandNotImplementedError()
 

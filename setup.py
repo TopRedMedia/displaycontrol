@@ -24,5 +24,7 @@ setup(
         'Topic :: System :: Hardware',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2.7',
-    ]
+    ],
+    test_suite='nose.collector',
+    tests_require=['nose'],
 )

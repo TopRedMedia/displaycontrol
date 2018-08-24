@@ -1,0 +1,14 @@
+README.md
+setup.py
+Displaycontrol.egg-info/PKG-INFO
+Displaycontrol.egg-info/SOURCES.txt
+Displaycontrol.egg-info/dependency_links.txt
+Displaycontrol.egg-info/top_level.txt
+displaycontrol/__init__.py
+displaycontrol/displaycontrol.py
+displaycontrol/exceptions.py
+displaycontrol/tools.py
+displaycontrol.egg-info/PKG-INFO
+displaycontrol.egg-info/SOURCES.txt
+displaycontrol.egg-info/dependency_links.txt
+displaycontrol.egg-info/top_level.txt
